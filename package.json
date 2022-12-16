@@ -1,0 +1,12 @@
+{
+  "name": "book-of-heroes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "pnpm --filter character test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

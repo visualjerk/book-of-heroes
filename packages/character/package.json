@@ -1,0 +1,17 @@
+{
+  "name": "@boh/character",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "vitest": "^0.25.8"
+  },
+  "dependencies": {
+    "@boh/utils": "workspace:*",
+    "lodash-es": "^4.17.21",
+    "nanoid": "^4.0.0"
+  }
+}
