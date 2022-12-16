@@ -1,4 +1,4 @@
-import { DeepReadonly } from './../util/UtilityTypes'
+import { DeepReadonly } from '@boh/utils'
 import { expect } from 'vitest'
 import {
   UnknownAttributeDefinitions,
