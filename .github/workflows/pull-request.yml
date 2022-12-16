@@ -1,0 +1,13 @@
+name: Check Pull Request
+'on': pull_request
+jobs:
+  test:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-env
+
+      - run: pnpm test
