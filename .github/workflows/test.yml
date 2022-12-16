@@ -15,4 +15,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-env
 
-      - run: pnpm test
+      - name: Test
+        shell: bash
+        run: pnpm test
