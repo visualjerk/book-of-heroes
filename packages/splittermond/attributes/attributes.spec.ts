@@ -1,9 +1,9 @@
 import { describe, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { attributeDefinition } from './attributes'
+import { attributesDefinition } from './attributes'
 
 describe('Attribute', () => {
-  const { setupTest } = createTestSetup(attributeDefinition)
+  const { setupTest } = createTestSetup(attributesDefinition)
 
   it.each([
     ['charisma', 'mensch', 0],

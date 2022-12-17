@@ -22,7 +22,7 @@ export const erschaffungDefinition = meisterschaftenLernenDefinition
 
           if (naechsterZustand === 3) {
             // 18 Attributpunkte, wobei jedes mindestens einen haben muss
-            groups.attribute.forEach((attributKey) => {
+            groups.attributes.forEach((attributKey) => {
               mutate(attributKey, {
                 type: 'add',
                 amount: 1,

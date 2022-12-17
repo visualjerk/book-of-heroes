@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { attribute } from './attributes'
+import { attributes } from './attributes'
 import { attributeSteigernDefinition } from './increase-attributes'
 
 describe('AttributeSteigern', () => {
@@ -10,9 +10,9 @@ describe('AttributeSteigern', () => {
       attributPunkte: initialPoints,
     })
 
-    const execute = (attribut: typeof attribute[number] = 'charisma') =>
+    const execute = (attribute: typeof attributes[number] = 'charisma') =>
       character.execute('attributSteigernMitPunkt', {
-        attribut,
+        attribute,
       })
 
     return {
@@ -51,7 +51,7 @@ describe('AttributeSteigern', () => {
     expect(getValue()).toBe(4)
   })
 
-  it.each(attribute)('works for attribute "%s"', (attribut) => {
+  it.each(attributes)('works for attribute "%s"', (attribut) => {
     const { getValue, execute } = setupTest()
     execute(attribut)
     execute(attribut)

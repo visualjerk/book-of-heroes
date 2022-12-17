@@ -1,7 +1,7 @@
 import { mapToAttributeDefinitions } from '@boh/character'
 import { basisDefinition } from '../basics'
 
-export const attribute = [
+export const attributes = [
   'charisma',
   'agility',
   'intuition',
@@ -12,12 +12,12 @@ export const attribute = [
   'willpower',
 ] as const
 
-export const attributeDefinition = basisDefinition.enhance(
+export const attributesDefinition = basisDefinition.enhance(
   {
-    ...mapToAttributeDefinitions(attribute, { type: 'number' }),
+    ...mapToAttributeDefinitions(attributes, { type: 'number' }),
   },
   {
-    attribute,
+    attributes,
   },
   {
     charisma: ({ attributes, rawAttributes }) => {

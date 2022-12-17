@@ -1,6 +1,6 @@
 import { CharacterState, mapToAttributeDefinitions } from '@boh/character'
 import { abgeleiteteWerteDefinition } from '../derived-values'
-import { attribute } from '../attributes/attributes'
+import { attributes } from '../attributes/attributes'
 import { magieschulen } from '../magic/magicschools'
 
 export { magieschulen }
@@ -74,7 +74,7 @@ type AttributeMitFertigkeiten =
 
 export const fertigkeitenAttribute: Record<
   AttributeMitFertigkeiten,
-  [typeof attribute[number], typeof attribute[number]]
+  [typeof attributes[number], typeof attributes[number]]
 > = {
   // Allgemeine Fertigkeiten
   akrobatik: ['agility', 'strength'],
