@@ -1,54 +1,53 @@
 import { learnSpellsDefinition } from '../magic/learn-spells'
 import { fertigkeitenDefinition } from '../skills/skills'
 
-export const meisterschaftenNamen = [
+export const masteryNames = [
   'blitzreflexe1',
   'blitzreflexe2',
   'blitzreflexe3',
 ] as const
 
-type MeisterschaftName = typeof meisterschaftenNamen[number]
-type FertigkeitName =
-  typeof fertigkeitenDefinition['groups']['fertigkeiten'][number]
+type MasteryName = typeof masteryNames[number]
+type SkillName = typeof fertigkeitenDefinition['groups']['fertigkeiten'][number]
 
-type MeisterschaftDefinitions = Record<
-  MeisterschaftName,
+type MasteriesByName = Record<
+  MasteryName,
   {
     level: number
-    fertigkeit: FertigkeitName
-    voraussetzung?: MeisterschaftName[]
+    skill: SkillName
+    precondition?: MasteryName[]
   }
 >
 
-export const meisterschaften: MeisterschaftDefinitions = {
+export const masteries: MasteriesByName = {
   blitzreflexe1: {
     level: 1,
-    fertigkeit: 'akrobatik',
+    skill: 'akrobatik',
   },
   blitzreflexe2: {
     level: 1,
-    fertigkeit: 'akrobatik',
-    voraussetzung: ['blitzreflexe1'],
+    skill: 'akrobatik',
+    precondition: ['blitzreflexe1'],
   },
   blitzreflexe3: {
     level: 2,
-    fertigkeit: 'akrobatik',
-    voraussetzung: ['blitzreflexe2'],
+    skill: 'akrobatik',
+    precondition: ['blitzreflexe2'],
   },
 }
 
-export function meisterschaftenInFertigkeit(fertigkeit: string) {
-  return Object.entries(meisterschaften)
-    .filter(([, meisterschaft]) => meisterschaft.fertigkeit === fertigkeit)
-    .map(([name, meisterschaft]) => ({
-      ...meisterschaft,
-      name: name as MeisterschaftName,
+export function getMasteriesBySkill(skill: string) {
+  return Object.entries(masteries)
+    .filter(([, mastery]) => mastery.skill === skill)
+    .map(([name, mastery]) => ({
+      ...mastery,
+      name: name as MasteryName,
     }))
 }
 
-export const meisterschaftenDefinition = learnSpellsDefinition.addAttributes({
-  meisterschaften: {
+export const masteriesDefinition = learnSpellsDefinition.addAttributes({
+  masteries: {
     type: 'multi-select',
-    options: meisterschaftenNamen,
+    options: masteryNames,
   },
 })

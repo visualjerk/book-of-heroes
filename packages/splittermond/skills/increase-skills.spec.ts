@@ -12,7 +12,7 @@ describe('FertigkeitenSteigern', () => {
 
     function increase() {
       character.execute('fertigkeitSteigern', {
-        fertigkeit: 'ban',
+        skill: 'ban',
       })
     }
 
@@ -109,7 +109,7 @@ describe('FertigkeitenSteigern', () => {
         increase()
       }
       expectState({
-        banMeisterschaftsPunkte: masteryPoints,
+        banMasteryPoints: masteryPoints,
       })
     }
   )

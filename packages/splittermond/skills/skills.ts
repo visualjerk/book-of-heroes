@@ -130,16 +130,16 @@ export const fertigkeitenAttribute: Record<
 export let fertigkeitenDefinition = fertigkeitenDefinitionBasis
 
 Object.entries(fertigkeitenAttribute).forEach(
-  ([fertigkeit, fertigkeitAttribute]) => {
+  ([skill, fertigkeitAttribute]) => {
     const [attribut1, attribut2] = fertigkeitAttribute
     fertigkeitenDefinition = fertigkeitenDefinition.addAttributeCalculations({
       // TODO: why do we need to define characterstate when using a dynamic prop key?
-      [fertigkeit]: ({
+      [skill]: ({
         attributes,
         rawAttributes,
       }: CharacterState<typeof fertigkeitenDefinitionBasis['attributes']>) => {
         return (
-          rawAttributes[fertigkeit as AttributeMitFertigkeiten] +
+          rawAttributes[skill as AttributeMitFertigkeiten] +
           attributes[attribut1] +
           attributes[attribut2]
         )

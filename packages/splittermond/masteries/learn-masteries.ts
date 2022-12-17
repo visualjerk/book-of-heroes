@@ -1,85 +1,81 @@
-import { meisterschaftenDefinition, meisterschaften } from './masteries'
+import { masteriesDefinition, masteries } from './masteries'
 
-export const meisterschaftenLernenDefinition = meisterschaftenDefinition
-  .addAttributes({ meisterschaftsPunkte: { type: 'number' } })
+export const learnMasteriesDefinition = masteriesDefinition
+  .addAttributes({ masteryPoints: { type: 'number' } })
   .addEvents(
     {
-      meisterschaftLernen: {
-        name: 'meisterschaften.value',
+      learnMastery: {
+        name: 'masteries.value',
       },
     },
     {
-      meisterschaftLernen: {
+      learnMastery: {
         apply({ mutate, reject }, { name }, { rawAttributes }) {
-          const meisterschaft = meisterschaften[name]
-          if (rawAttributes.meisterschaften.includes(name)) {
+          const mastery = masteries[name]
+          if (rawAttributes.masteries.includes(name)) {
             reject('Meisterschaft wurde bereits gelernt')
             return
           }
 
-          const voraussetzungen = meisterschaft.voraussetzung ?? []
+          const precondition = mastery.precondition ?? []
           if (
-            !voraussetzungen.every((name) =>
-              rawAttributes.meisterschaften.includes(name)
+            !precondition.every((name) =>
+              rawAttributes.masteries.includes(name)
             )
           ) {
             reject('Nicht alle Voraussetzungen erfüllt')
             return
           }
 
-          // Für Meisterschaftspunkt in Fertigkeit kaufen
-          const meisterschaftsPunkteInFertigkeit =
-            rawAttributes[`${meisterschaft.fertigkeit}MeisterschaftsPunkte`]
-          const passenderMeisterschaftsPunkt =
-            meisterschaftsPunkteInFertigkeit.find(
-              (punkt) => punkt >= meisterschaft.level
-            )
+          // Learn with mastery points in skill
+          const masteryPointsInSkill =
+            rawAttributes[`${mastery.skill}MasteryPoints`]
+          const matchingMasteryPoint = masteryPointsInSkill.find(
+            (punkt) => punkt >= mastery.level
+          )
 
-          if (passenderMeisterschaftsPunkt != null) {
-            mutate(`${meisterschaft.fertigkeit}MeisterschaftsPunkte`, {
+          if (matchingMasteryPoint != null) {
+            mutate(`${mastery.skill}MasteryPoints`, {
               type: 'remove',
-              option: passenderMeisterschaftsPunkt,
+              option: matchingMasteryPoint,
             })
-            mutate('meisterschaften', {
+            mutate('masteries', {
               type: 'add',
               option: name,
             })
             return
           }
 
-          // Für allgemeine Meisterschaftspunkte kaufen
-          if (
-            rawAttributes.meisterschaftsPunkte > 0 &&
-            meisterschaft.level === 1
-          ) {
-            mutate('meisterschaftsPunkte', {
+          // Learn with general mastery point
+          if (rawAttributes.masteryPoints > 0 && mastery.level === 1) {
+            mutate('masteryPoints', {
               type: 'subtract',
               amount: 1,
             })
-            mutate('meisterschaften', {
+            mutate('masteries', {
               type: 'add',
               option: name,
             })
             return
           }
 
-          const skillPoints = rawAttributes[meisterschaft.fertigkeit]
-          const meisterschaftsSchwelle = Math.floor((skillPoints - 3) / 3)
-          if (meisterschaftsSchwelle < meisterschaft.level) {
+          const skillPoints = rawAttributes[mastery.skill]
+          const masteryTreshold = Math.floor((skillPoints - 3) / 3)
+          if (masteryTreshold < mastery.level) {
             reject('Zu niedrige Meisterschaftsschwelle')
             return
           }
 
-          const freieErfahrungspunkte =
+          const freeXp =
             rawAttributes.erfahrungspunkte -
             rawAttributes.erfahrungspunkteEingesetzt
 
-          if (freieErfahrungspunkte < 15) {
+          if (freeXp < 15) {
             reject('Zu wenig Erfahrungspunkte')
             return
           }
 
-          mutate('meisterschaften', {
+          mutate('masteries', {
             type: 'add',
             option: name,
           })

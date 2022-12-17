@@ -40,7 +40,7 @@ describe('Erschaffung', () => {
       attributPunkte: 11,
       freieFertigkeitsPunkte: 55,
       erfahrungspunkte: 15,
-      meisterschaftsPunkte: 3,
+      masteryPoints: 3,
     })
   })
 })

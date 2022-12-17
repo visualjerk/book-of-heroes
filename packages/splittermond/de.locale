@@ -8,6 +8,8 @@ strength,staerke
 intellect,verstand
 willpower,willenskraft
 
+skills,fertigkeiten
+
 magicschools,magieschulen
 ban,bann
 control,beherrschung
@@ -39,3 +41,6 @@ damage,schaden
 perception,wahrnehmung
 communication,verstaendigung
 disguise,verhuellung
+
+mastery,meisterschaft
+masteries,meisterschaften

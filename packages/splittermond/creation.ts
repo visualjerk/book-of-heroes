@@ -1,6 +1,6 @@
-import { meisterschaftenLernenDefinition } from './masteries/learn-masteries'
+import { learnMasteriesDefinition } from './masteries/learn-masteries'
 
-export const erschaffungDefinition = meisterschaftenLernenDefinition
+export const erschaffungDefinition = learnMasteriesDefinition
   .addAttributes({
     erschaffungsZustand: {
       type: 'single-select',
@@ -43,7 +43,7 @@ export const erschaffungDefinition = meisterschaftenLernenDefinition
               type: 'add',
               amount: 15,
             })
-            mutate('meisterschaftsPunkte', {
+            mutate('masteryPoints', {
               type: 'add',
               amount: 3,
             })
