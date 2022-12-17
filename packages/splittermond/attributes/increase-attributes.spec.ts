@@ -10,7 +10,7 @@ describe('AttributeSteigern', () => {
       attributPunkte: initialPoints,
     })
 
-    const execute = (attribut: typeof attribute[number] = 'ausstrahlung') =>
+    const execute = (attribut: typeof attribute[number] = 'charisma') =>
       character.execute('attributSteigernMitPunkt', {
         attribut,
       })
@@ -18,9 +18,8 @@ describe('AttributeSteigern', () => {
     return {
       character,
       execute,
-      getValue: (
-        attribute: keyof typeof character.attributes = 'ausstrahlung'
-      ) => getRawValue(attribute),
+      getValue: (attribute: keyof typeof character.attributes = 'charisma') =>
+        getRawValue(attribute),
     }
   }
 
@@ -94,10 +93,10 @@ describe('AttributeSteigern', () => {
   it('maximum for strength is 3 for vargs', () => {
     const { character, getValue, execute } = setupTest()
     character.rawAttributes.rasse = 'varg'
-    execute('staerke')
-    execute('staerke')
-    execute('staerke')
-    expect(execute('staerke')).toBeInstanceOf(Error)
-    expect(getValue('staerke')).toBe(3)
+    execute('strength')
+    execute('strength')
+    execute('strength')
+    expect(execute('strength')).toBeInstanceOf(Error)
+    expect(getValue('strength')).toBe(3)
   })
 })

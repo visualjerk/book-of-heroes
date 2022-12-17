@@ -25,7 +25,7 @@ export const attributeSteigernDefinition = attributeDefinition
           let maxWert = attributeMitWert4 < erlaubtMitWert4 ? 4 : 3
 
           // Varge dürfen Stärke nicht auf 4 setzen (haben bereits +2 auf Stärke)
-          if (attribut === 'staerke' && rawAttributes.rasse === 'varg') {
+          if (attribut === 'strength' && rawAttributes.rasse === 'varg') {
             maxWert = 3
           }
 

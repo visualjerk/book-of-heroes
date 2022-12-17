@@ -31,7 +31,7 @@ describe('AbgeleiteteWerte', () => {
     (race, agility, speed) => {
       const { expectState } = setupTest({
         rasse: race,
-        beweglichkeit: agility,
+        agility: agility,
       })
       expectState({
         geschwindigkeit: speed,
@@ -50,7 +50,7 @@ describe('AbgeleiteteWerte', () => {
 
   it('health is calculated correctly', () => {
     const { expectState } = setupTest({
-      konstitution: 4,
+      constitution: 4,
       rasse: 'mensch',
     })
     expectState({
@@ -60,8 +60,8 @@ describe('AbgeleiteteWerte', () => {
 
   it('focus is calculated correctly', () => {
     const { expectState } = setupTest({
-      mystik: 4,
-      willenskraft: 2,
+      mysticism: 4,
+      willpower: 2,
     })
     expectState({
       fokus: 12,
@@ -69,9 +69,9 @@ describe('AbgeleiteteWerte', () => {
   })
 
   it.each([
-    ['verteidigung', 'beweglichkeit', 'staerke'],
-    ['geistigerWiderstand', 'verstand', 'willenskraft'],
-    ['koerperlicherWiderstand', 'konstitution', 'willenskraft'],
+    ['verteidigung', 'agility', 'strength'],
+    ['geistigerWiderstand', 'intellect', 'willpower'],
+    ['koerperlicherWiderstand', 'constitution', 'willpower'],
   ] as const)(
     '"%s" is calculated from "%s" and "%s"',
     (resistance, attribute1, attribute2) => {

@@ -49,40 +49,40 @@ export const abgeleiteteWerteDefinition = attributeSteigernDefinition.enhance(
       }
     },
     geschwindigkeit: ({ attributes }) => {
-      return attributes.beweglichkeit + attributes.groessenklasse
+      return attributes.agility + attributes.groessenklasse
     },
     initiative: ({ attributes }) => {
       return 10 - attributes.intuition
     },
     lebenspunkte: ({ attributes }) => {
-      return attributes.konstitution + attributes.groessenklasse
+      return attributes.constitution + attributes.groessenklasse
     },
     fokus: ({ attributes }) => {
-      return (attributes.mystik + attributes.willenskraft) * 2
+      return (attributes.mysticism + attributes.willpower) * 2
     },
 
     // Widerstandswerte
     verteidigung: ({ attributes }) => {
       return (
         12 +
-        attributes.beweglichkeit +
-        attributes.staerke +
+        attributes.agility +
+        attributes.strength +
         (attributes.heldengrad - 1) * 2
       )
     },
     geistigerWiderstand: ({ attributes }) => {
       return (
         12 +
-        attributes.verstand +
-        attributes.willenskraft +
+        attributes.intellect +
+        attributes.willpower +
         (attributes.heldengrad - 1) * 2
       )
     },
     koerperlicherWiderstand: ({ attributes }) => {
       return (
         12 +
-        attributes.konstitution +
-        attributes.willenskraft +
+        attributes.constitution +
+        attributes.willpower +
         (attributes.heldengrad - 1) * 2
       )
     },
