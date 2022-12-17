@@ -3,14 +3,14 @@ import { createTestSetup } from '@boh/character'
 import {
   fertigkeitenDefinition,
   allgemeineFertigkeiten,
-  magieschulen,
+  magicschools,
   fertigkeitenAttribute,
 } from './skills'
 
 describe('Fertigkeiten', () => {
   const { setupTest } = createTestSetup(fertigkeitenDefinition)
 
-  describe.each([...allgemeineFertigkeiten, ...magieschulen])(
+  describe.each([...allgemeineFertigkeiten, ...magicschools])(
     'skill "%s"',
     (skill) => {
       it('adds its own points', () => {

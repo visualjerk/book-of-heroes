@@ -1,7 +1,7 @@
 import { mapToAttributeDefinitions } from '@boh/character'
 import { fertigkeitenDefinition, fertigkeiten } from './skills'
-import { magieschulen, Magieschule } from '../magic/magicschools'
-import { ZauberGrad, zauberGrade, zauberSchwellen } from '../magic/spells'
+import { magicschools, Magicschool } from '../magic/magicschools'
+import { MagicLevel, magicLevels, magicTresholds } from '../magic/spells'
 
 const fertigkeitsMeisterschaftsPunkte =
   fertigkeiten.map<`${typeof fertigkeiten[number]}MeisterschaftsPunkte`>(
@@ -19,12 +19,12 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
       options: meisterschaftsGrade,
     }),
     ...mapToAttributeDefinitions(
-      magieschulen,
+      magicschools,
       {
         type: 'multi-select',
-        options: zauberGrade,
+        options: magicLevels,
       },
-      (schule) => `${schule}ZauberPunkte`
+      (school) => `${school}SpellPoints`
     ),
   })
   .addEvents(
@@ -47,12 +47,12 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
           const meisterschaftsGrad = meisterschaftsGrade[meisterschaftsSchwelle]
 
           // Zaubergrad erreicht?
-          let zauberGrad: ZauberGrad | null = null
-          if (magieschulen.includes(fertigkeit as Magieschule)) {
-            const zauberSchwelle = zauberSchwellen.findIndex(
+          let magicLevel: MagicLevel | null = null
+          if (magicschools.includes(fertigkeit as Magicschool)) {
+            const zauberSchwelle = magicTresholds.findIndex(
               (schwelle) => schwelle === rawAttributes[fertigkeit] + 1
             )
-            zauberGrad = zauberGrade[zauberSchwelle]
+            magicLevel = magicLevels[zauberSchwelle]
           }
 
           const maximalWert = 6 + 3 * (attributes.heldengrad - 1)
@@ -76,10 +76,10 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
                 option: meisterschaftsGrad,
               })
             }
-            if (zauberGrad != null) {
-              mutate(`${fertigkeit as Magieschule}ZauberPunkte`, {
+            if (magicLevel != null) {
+              mutate(`${fertigkeit as Magicschool}SpellPoints`, {
                 type: 'add',
-                option: zauberGrad,
+                option: magicLevel,
               })
             }
             return
@@ -107,10 +107,10 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
               option: meisterschaftsGrad,
             })
           }
-          if (zauberGrad != null) {
-            mutate(`${fertigkeit as Magieschule}ZauberPunkte`, {
+          if (magicLevel != null) {
+            mutate(`${fertigkeit as Magicschool}SpellPoints`, {
               type: 'add',
-              option: zauberGrad,
+              option: magicLevel,
             })
           }
         },

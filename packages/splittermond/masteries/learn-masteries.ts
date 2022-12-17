@@ -63,8 +63,8 @@ export const meisterschaftenLernenDefinition = meisterschaftenDefinition
             return
           }
 
-          const fertigkeitPunkte = rawAttributes[meisterschaft.fertigkeit]
-          const meisterschaftsSchwelle = Math.floor((fertigkeitPunkte - 3) / 3)
+          const skillPoints = rawAttributes[meisterschaft.fertigkeit]
+          const meisterschaftsSchwelle = Math.floor((skillPoints - 3) / 3)
           if (meisterschaftsSchwelle < meisterschaft.level) {
             reject('Zu niedrige Meisterschaftsschwelle')
             return

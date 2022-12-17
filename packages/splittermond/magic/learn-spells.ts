@@ -1,98 +1,98 @@
 import { mapToAttributeDefinitions } from '@boh/character'
 import { fertigkeitenSteigernDefinition } from '../skills/increase-skills'
-import { magieschulen } from './magicschools'
-import { zauberNachNamen, zauberNamenInSchule } from './spells'
+import { magicschools } from './magicschools'
+import { getSpellByName, getSpellNamesInSchool } from './spells'
 
-const magieschulenZauber =
-  magieschulen.map<`${typeof magieschulen[number]}Zauber`>(
-    (schule) => `${schule}Zauber`
+const magicschoolsSpells =
+  magicschools.map<`${typeof magicschools[number]}Spells`>(
+    (school) => `${school}Spells`
   )
 
-export const zauberLernenDefinition = fertigkeitenSteigernDefinition
+export const learnSpellsDefinition = fertigkeitenSteigernDefinition
   .addAttributes({
     ...mapToAttributeDefinitions(
-      magieschulen,
-      (schule) => ({
+      magicschools,
+      (school) => ({
         type: 'multi-select',
-        options: zauberNamenInSchule(schule),
+        options: getSpellNamesInSchool(school),
       }),
-      (schule) => `${schule}Zauber`
+      (school) => `${school}Spells`
     ),
   })
   .addAttributeGroups({
-    magieschulenZauber: magieschulenZauber,
+    magicschoolsSpells,
   })
   .addEvents(
     {
-      zauberLernen: {
-        schule: 'group.magieSchulen',
-        name: 'group.magieschulenZauber.value',
+      learnSpell: {
+        school: 'group.magicschools',
+        name: 'group.magicschoolsSpells.value',
       },
     },
     {
-      zauberLernen: {
+      learnSpell: {
         apply(
           { reject, mutate },
-          { schule, name },
+          { school, name },
           { attributes, rawAttributes }
         ) {
-          const zauber = zauberNachNamen(name)
-          if (!zauber) {
+          const spell = getSpellByName(name)
+          if (!spell) {
             reject('Zauber nicht vorhanden')
             return
           }
 
-          const zauberSchule = zauber.schulen.find((a) => a.includes(schule))
-          if (!zauberSchule) {
+          const magicSchool = spell.schools.find((a) => a.includes(school))
+          if (!magicSchool) {
             reject('Zauber für diese Schule nicht möglich')
             return
           }
 
-          const fertigkeitPunkte = rawAttributes[schule]
-          if (fertigkeitPunkte < 1) {
+          const skillPoints = rawAttributes[school]
+          if (skillPoints < 1) {
             reject('Zauberschule nicht gelernt')
             return
           }
 
-          const moeglicherZauberGrad = Math.floor(fertigkeitPunkte / 3)
-          const zauberGrad = Number(zauberSchule.split(' ')[1])
-          if (moeglicherZauberGrad < zauberGrad) {
+          const possibleMagicLevel = Math.floor(skillPoints / 3)
+          const magicLevel = Number(magicSchool.split(' ')[1])
+          if (possibleMagicLevel < magicLevel) {
             reject('Zu niedriger Zaubergrad')
             return
           }
 
-          // Lernen mit Zauberpunkt
-          const zauberPunkteInSchule = rawAttributes[`${schule}ZauberPunkte`]
-          const passenderZauberPunkt = zauberPunkteInSchule.find(
-            (punkt) => punkt >= zauberGrad
+          // Learn by spell point
+          const spellPointsInSchool = rawAttributes[`${school}SpellPoints`]
+          const matchingSpellPoint = spellPointsInSchool.find(
+            (punkt) => punkt >= magicLevel
           )
 
-          if (passenderZauberPunkt != null) {
-            mutate(`${schule}ZauberPunkte`, {
+          if (matchingSpellPoint != null) {
+            mutate(`${school}SpellPoints`, {
               type: 'remove',
-              option: passenderZauberPunkt,
+              option: matchingSpellPoint,
             })
-            mutate(`${schule}Zauber`, {
+            mutate(`${school}Spells`, {
               type: 'add',
               option: name,
             })
             return
           }
 
-          // Lernen mit Erfahrungspunkten
-          const erfahrungspunktKosten = Math.max(1, zauberGrad * 3)
-          const freieErfahrungspunkte =
+          // Learn by experience points
+          const xpCost = Math.max(1, magicLevel * 3)
+          const freeXp =
             attributes.erfahrungspunkte - attributes.erfahrungspunkteEingesetzt
-          if (freieErfahrungspunkte < erfahrungspunktKosten) {
+          if (freeXp < xpCost) {
             reject('Nicht genug Erfahrungspunkte')
             return
           }
 
           mutate('erfahrungspunkteEingesetzt', {
             type: 'add',
-            amount: erfahrungspunktKosten,
+            amount: xpCost,
           })
-          mutate(`${schule}Zauber`, {
+          mutate(`${school}Spells`, {
             type: 'add',
             option: name,
           })

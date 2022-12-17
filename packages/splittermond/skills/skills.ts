@@ -1,9 +1,9 @@
 import { CharacterState, mapToAttributeDefinitions } from '@boh/character'
 import { abgeleiteteWerteDefinition } from '../derived-values'
 import { attributes } from '../attributes/attributes'
-import { magieschulen } from '../magic/magicschools'
+import { magicschools } from '../magic/magicschools'
 
-export { magieschulen }
+export { magicschools as magicschools }
 
 export const allgemeineFertigkeiten = [
   'akrobatik',
@@ -31,7 +31,7 @@ export const allgemeineFertigkeiten = [
   'strassenkunde',
   'tierfuehrung',
   'ueberleben',
-  'wahrnehmung',
+  'perception',
   'zaehigkeit',
 ] as const
 
@@ -47,13 +47,13 @@ export const kampfFertigkeiten = [
 
 export const fertigkeiten = [
   ...allgemeineFertigkeiten,
-  ...magieschulen,
+  ...magicschools,
   ...kampfFertigkeiten,
 ] as const
 
 export const fertigkeitenGruppen = {
   allgemeineFertigkeiten,
-  magieSchulen: magieschulen,
+  magicschools: magicschools,
   kampfFertigkeiten,
 }
 
@@ -64,13 +64,13 @@ const fertigkeitenDefinitionBasis = abgeleiteteWerteDefinition
   .addAttributeGroups({
     fertigkeiten,
     allgemeineFertigkeiten,
-    magieSchulen: magieschulen,
+    magicschools: magicschools,
     kampfFertigkeiten,
   })
 
 type AttributeMitFertigkeiten =
   | typeof allgemeineFertigkeiten[number]
-  | typeof magieschulen[number]
+  | typeof magicschools[number]
 
 export const fertigkeitenAttribute: Record<
   AttributeMitFertigkeiten,
@@ -102,28 +102,28 @@ export const fertigkeitenAttribute: Record<
   strassenkunde: ['charisma', 'intuition'],
   tierfuehrung: ['agility', 'charisma'],
   ueberleben: ['intuition', 'constitution'],
-  wahrnehmung: ['intuition', 'willpower'],
+  perception: ['intuition', 'willpower'],
   zaehigkeit: ['constitution', 'willpower'],
 
-  // Magieschulen
-  bann: ['mysticism', 'willpower'],
-  beherrschung: ['mysticism', 'willpower'],
-  bewegung: ['mysticism', 'agility'],
-  erkenntnis: ['mysticism', 'intellect'],
-  fels: ['mysticism', 'constitution'],
-  feuer: ['mysticism', 'charisma'],
-  heilung: ['mysticism', 'charisma'],
+  // magicschools
+  ban: ['mysticism', 'willpower'],
+  control: ['mysticism', 'willpower'],
+  movement: ['mysticism', 'agility'],
+  realization: ['mysticism', 'intellect'],
+  stone: ['mysticism', 'constitution'],
+  fire: ['mysticism', 'charisma'],
+  healing: ['mysticism', 'charisma'],
   illusion: ['mysticism', 'charisma'],
-  kampf: ['mysticism', 'strength'],
-  licht: ['mysticism', 'charisma'],
-  natur: ['mysticism', 'charisma'],
-  schatten: ['mysticism', 'intuition'],
-  schicksal: ['mysticism', 'charisma'],
-  schutz: ['mysticism', 'charisma'],
+  battle: ['mysticism', 'strength'],
+  light: ['mysticism', 'charisma'],
+  nature: ['mysticism', 'charisma'],
+  shadow: ['mysticism', 'intuition'],
+  fate: ['mysticism', 'charisma'],
+  protection: ['mysticism', 'charisma'],
   staerkung: ['mysticism', 'strength'],
-  tod: ['mysticism', 'intellect'],
-  verwandlung: ['mysticism', 'constitution'],
-  wasser: ['mysticism', 'intuition'],
+  death: ['mysticism', 'intellect'],
+  transformation: ['mysticism', 'constitution'],
+  water: ['mysticism', 'intuition'],
   wind: ['mysticism', 'intellect'],
 }
 

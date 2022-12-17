@@ -12,7 +12,7 @@ describe('FertigkeitenSteigern', () => {
 
     function increase() {
       character.execute('fertigkeitSteigern', {
-        fertigkeit: 'bann',
+        fertigkeit: 'ban',
       })
     }
 
@@ -26,7 +26,7 @@ describe('FertigkeitenSteigern', () => {
     const { expectState, increase } = setupTest()
     increase()
     expectState({
-      bann: 0,
+      ban: 0,
     })
   })
 
@@ -36,7 +36,7 @@ describe('FertigkeitenSteigern', () => {
     })
     increase()
     expectState({
-      bann: 1,
+      ban: 1,
       freieFertigkeitsPunkte: 0,
     })
   })
@@ -47,7 +47,7 @@ describe('FertigkeitenSteigern', () => {
     })
     increase()
     expectState({
-      bann: 1,
+      ban: 1,
       erfahrungspunkteEingesetzt: 3,
     })
   })
@@ -61,13 +61,13 @@ describe('FertigkeitenSteigern', () => {
     [600, 15],
   ])('for used xp of %i max points are %i', (usedXp, points) => {
     const { expectState, increase } = setupTest({
-      bann: points,
+      ban: points,
       erfahrungspunkte: 1000,
       erfahrungspunkteEingesetzt: usedXp,
     })
     increase()
     expectState({
-      bann: points,
+      ban: points,
       erfahrungspunkteEingesetzt: usedXp,
     })
   })
@@ -82,14 +82,14 @@ describe('FertigkeitenSteigern', () => {
     [12, 9],
   ])('for skill points of %i cost is %i xp', (points, cost) => {
     const { expectState, increase } = setupTest({
-      bann: points,
+      ban: points,
       erfahrungspunkte: 1000,
       erfahrungspunkteEingesetzt: 600,
     })
     increase()
     expectState({
       erfahrungspunkteEingesetzt: 600 + cost,
-      bann: points + 1,
+      ban: points + 1,
     })
   })
 
@@ -109,7 +109,7 @@ describe('FertigkeitenSteigern', () => {
         increase()
       }
       expectState({
-        bannMeisterschaftsPunkte: masteryPoints,
+        banMeisterschaftsPunkte: masteryPoints,
       })
     }
   )
@@ -132,7 +132,7 @@ describe('FertigkeitenSteigern', () => {
         increase()
       }
       expectState({
-        bannZauberPunkte: spellPoints,
+        banSpellPoints: spellPoints,
       })
     }
   )

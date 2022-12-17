@@ -1,4 +1,4 @@
-import { zauberLernenDefinition } from '../magic/learn-spells'
+import { learnSpellsDefinition } from '../magic/learn-spells'
 import { fertigkeitenDefinition } from '../skills/skills'
 
 export const meisterschaftenNamen = [
@@ -46,7 +46,7 @@ export function meisterschaftenInFertigkeit(fertigkeit: string) {
     }))
 }
 
-export const meisterschaftenDefinition = zauberLernenDefinition.addAttributes({
+export const meisterschaftenDefinition = learnSpellsDefinition.addAttributes({
   meisterschaften: {
     type: 'multi-select',
     options: meisterschaftenNamen,
