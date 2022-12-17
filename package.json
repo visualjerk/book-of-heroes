@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "pnpm --filter character test"
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^0.25.8"
   },
   "keywords": [],
   "author": "",

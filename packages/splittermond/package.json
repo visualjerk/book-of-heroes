@@ -1,0 +1,11 @@
+{
+  "name": "@boh/splittermond",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@boh/character": "workspace:*"
+  }
+}

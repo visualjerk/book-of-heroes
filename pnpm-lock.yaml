@@ -3,7 +3,10 @@ lockfileVersion: 5.4
 importers:
 
   .:
-    specifiers: {}
+    specifiers:
+      vitest: ^0.25.8
+    devDependencies:
+      vitest: 0.25.8
 
   apps/ui:
     specifiers:
@@ -26,14 +29,18 @@ importers:
       '@types/lodash-es': ^4.17.6
       lodash-es: ^4.17.21
       nanoid: ^4.0.0
-      vitest: ^0.25.8
     dependencies:
       '@boh/utils': link:../utils
       lodash-es: 4.17.21
       nanoid: 4.0.0
     devDependencies:
       '@types/lodash-es': 4.17.6
-      vitest: 0.25.8
+
+  packages/splittermond:
+    specifiers:
+      '@boh/character': workspace:*
+    dependencies:
+      '@boh/character': link:../character
 
   packages/utils:
     specifiers: {}

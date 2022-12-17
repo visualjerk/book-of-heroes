@@ -6,8 +6,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.6",
-    "vitest": "^0.25.8"
+    "@types/lodash-es": "^4.17.6"
   },
   "dependencies": {
     "@boh/utils": "workspace:*",
