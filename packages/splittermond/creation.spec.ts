@@ -38,7 +38,7 @@ describe('Erschaffung', () => {
     character.execute('erschaffungWeiter', {})
     expectState({
       attributPunkte: 11,
-      freieFertigkeitsPunkte: 55,
+      freeSkillPoints: 55,
       erfahrungspunkte: 15,
       masteryPoints: 3,
     })

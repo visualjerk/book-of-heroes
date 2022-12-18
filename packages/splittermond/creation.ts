@@ -35,7 +35,7 @@ export const erschaffungDefinition = learnMasteriesDefinition
               type: 'add',
               amount: attributPunkte,
             })
-            mutate('freieFertigkeitsPunkte', {
+            mutate('freeSkillPoints', {
               type: 'add',
               amount: 55,
             })

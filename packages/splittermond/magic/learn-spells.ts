@@ -1,5 +1,5 @@
 import { mapToAttributeDefinitions } from '@boh/character'
-import { fertigkeitenSteigernDefinition } from '../skills/increase-skills'
+import { increaseSkillsDefinition } from '../skills/increase-skills'
 import { magicschools } from './magicschools'
 import { getSpellByName, getSpellNamesInSchool } from './spells'
 
@@ -8,7 +8,7 @@ const magicschoolsSpells =
     (school) => `${school}Spells`
   )
 
-export const learnSpellsDefinition = fertigkeitenSteigernDefinition
+export const learnSpellsDefinition = increaseSkillsDefinition
   .addAttributes({
     ...mapToAttributeDefinitions(
       magicschools,

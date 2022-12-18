@@ -1,22 +1,21 @@
 import { mapToAttributeDefinitions } from '@boh/character'
-import { fertigkeitenDefinition, fertigkeiten } from './skills'
+import { skillsDefinition, skills } from './skills'
 import { magicschools, Magicschool } from '../magic/magicschools'
 import { MagicLevel, magicLevels, magicTresholds } from '../magic/spells'
 
-const fertigkeitsMeisterschaftsPunkte =
-  fertigkeiten.map<`${typeof fertigkeiten[number]}MasteryPoints`>(
-    (skill) => `${skill}MasteryPoints`
-  )
+const skillsMasteryPoints = skills.map<`${typeof skills[number]}MasteryPoints`>(
+  (skill) => `${skill}MasteryPoints`
+)
 
-const meisterschaftsSchwellen = [6, 9, 12] as const
-const meisterschaftsGrade = [1, 2, 3] as const
+const masteryTresholds = [6, 9, 12] as const
+const masteryLevels = [1, 2, 3] as const
 
-export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
+export const increaseSkillsDefinition = skillsDefinition
   .addAttributes({
-    freieFertigkeitsPunkte: { type: 'number' },
-    ...mapToAttributeDefinitions(fertigkeitsMeisterschaftsPunkte, {
+    freeSkillPoints: { type: 'number' },
+    ...mapToAttributeDefinitions(skillsMasteryPoints, {
       type: 'multi-select',
-      options: meisterschaftsGrade,
+      options: masteryLevels,
     }),
     ...mapToAttributeDefinitions(
       magicschools,
@@ -29,36 +28,36 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
   })
   .addEvents(
     {
-      fertigkeitSteigern: {
-        skill: 'group.fertigkeiten',
+      increaseSkill: {
+        skill: 'group.skills',
       },
     },
     {
-      fertigkeitSteigern: {
+      increaseSkill: {
         apply({ mutate, reject }, { skill }, { rawAttributes, attributes }) {
-          // Meisterschaftgrad erreicht?
-          const masteryTreshold = meisterschaftsSchwellen.findIndex(
-            (schwelle) => schwelle === rawAttributes[skill] + 1
+          // Reached mastery level?
+          const masteryTreshold = masteryTresholds.findIndex(
+            (treshold) => treshold === rawAttributes[skill] + 1
           )
-          const meisterschaftsGrad = meisterschaftsGrade[masteryTreshold]
+          const masteryLevel = masteryLevels[masteryTreshold]
 
-          // Zaubergrad erreicht?
+          // Reached magic school level
           let magicLevel: MagicLevel | null = null
           if (magicschools.includes(skill as Magicschool)) {
-            const zauberSchwelle = magicTresholds.findIndex(
-              (schwelle) => schwelle === rawAttributes[skill] + 1
+            const magicTreshold = magicTresholds.findIndex(
+              (treshold) => treshold === rawAttributes[skill] + 1
             )
-            magicLevel = magicLevels[zauberSchwelle]
+            magicLevel = magicLevels[magicTreshold]
           }
 
-          const maximalWert = 6 + 3 * (attributes.heldengrad - 1)
-          if (rawAttributes[skill] >= maximalWert) {
-            reject(`Maximal ${maximalWert} Punkte pro Fertigkeit`)
+          const maximumValue = 6 + 3 * (attributes.heldengrad - 1)
+          if (rawAttributes[skill] >= maximumValue) {
+            reject(`Maximal ${maximumValue} Punkte pro Fertigkeit`)
           }
 
-          // Steigern mit Punkt
-          if (rawAttributes.freieFertigkeitsPunkte >= 1) {
-            mutate('freieFertigkeitsPunkte', {
+          // Increase with skill point
+          if (rawAttributes.freeSkillPoints >= 1) {
+            mutate('freeSkillPoints', {
               type: 'subtract',
               amount: 1,
             })
@@ -66,10 +65,10 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
               type: 'add',
               amount: 1,
             })
-            if (meisterschaftsGrad != null) {
+            if (masteryLevel != null) {
               mutate(`${skill}MasteryPoints`, {
                 type: 'add',
-                option: meisterschaftsGrad,
+                option: masteryLevel,
               })
             }
             if (magicLevel != null) {
@@ -81,26 +80,26 @@ export const fertigkeitenSteigernDefinition = fertigkeitenDefinition
             return
           }
 
-          // Steigern mit Erfahrungspunkten
-          const erfahrungspunktKosten =
+          // Increase with XP
+          const xpCost =
             3 + 2 * Math.max(0, Math.floor((rawAttributes[skill] - 3) / 3))
-          const freieErfahrungspunkte =
+          const freeXp =
             attributes.erfahrungspunkte - attributes.erfahrungspunkteEingesetzt
-          if (freieErfahrungspunkte < erfahrungspunktKosten) {
+          if (freeXp < xpCost) {
             reject('Nicht genug Erfahrungspunkte')
           }
           mutate('erfahrungspunkteEingesetzt', {
             type: 'add',
-            amount: erfahrungspunktKosten,
+            amount: xpCost,
           })
           mutate(skill, {
             type: 'add',
             amount: 1,
           })
-          if (meisterschaftsGrad != null) {
+          if (masteryLevel != null) {
             mutate(`${skill}MasteryPoints`, {
               type: 'add',
-              option: meisterschaftsGrad,
+              option: masteryLevel,
             })
           }
           if (magicLevel != null) {

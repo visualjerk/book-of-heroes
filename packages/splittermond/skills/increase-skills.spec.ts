@@ -1,17 +1,17 @@
 import { describe, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { fertigkeitenSteigernDefinition } from './increase-skills'
+import { increaseSkillsDefinition } from './increase-skills'
 
-describe('FertigkeitenSteigern', () => {
+describe('Increase Skills', () => {
   const { setupTest: generalSetupTest } = createTestSetup(
-    fertigkeitenSteigernDefinition
+    increaseSkillsDefinition
   )
 
   function setupTest(...args: Parameters<typeof generalSetupTest>) {
     const { expectState, character } = generalSetupTest(...args)
 
     function increase() {
-      character.execute('fertigkeitSteigern', {
+      character.execute('increaseSkill', {
         skill: 'ban',
       })
     }
@@ -32,12 +32,12 @@ describe('FertigkeitenSteigern', () => {
 
   it('can increase with points', () => {
     const { expectState, increase } = setupTest({
-      freieFertigkeitsPunkte: 1,
+      freeSkillPoints: 1,
     })
     increase()
     expectState({
       ban: 1,
-      freieFertigkeitsPunkte: 0,
+      freeSkillPoints: 0,
     })
   })
 

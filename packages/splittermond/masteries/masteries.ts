@@ -1,5 +1,5 @@
 import { learnSpellsDefinition } from '../magic/learn-spells'
-import { fertigkeitenDefinition } from '../skills/skills'
+import { skillsDefinition } from '../skills/skills'
 
 export const masteryNames = [
   'blitzreflexe1',
@@ -8,7 +8,7 @@ export const masteryNames = [
 ] as const
 
 type MasteryName = typeof masteryNames[number]
-type SkillName = typeof fertigkeitenDefinition['groups']['fertigkeiten'][number]
+type SkillName = typeof skillsDefinition['groups']['skills'][number]
 
 type MasteriesByName = Record<
   MasteryName,
@@ -22,16 +22,16 @@ type MasteriesByName = Record<
 export const masteries: MasteriesByName = {
   blitzreflexe1: {
     level: 1,
-    skill: 'akrobatik',
+    skill: 'acrobatics',
   },
   blitzreflexe2: {
     level: 1,
-    skill: 'akrobatik',
+    skill: 'acrobatics',
     precondition: ['blitzreflexe1'],
   },
   blitzreflexe3: {
     level: 2,
-    skill: 'akrobatik',
+    skill: 'acrobatics',
     precondition: ['blitzreflexe2'],
   },
 }

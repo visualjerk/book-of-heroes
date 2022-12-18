@@ -5,107 +5,107 @@ import { magicschools } from '../magic/magicschools'
 
 export { magicschools as magicschools }
 
-export const allgemeineFertigkeiten = [
-  'akrobatik',
-  'alchemie',
-  'anfuehren',
-  'arkaneKunde',
-  'athletik',
-  'darbietung',
-  'diplomatie',
-  'edelhandwerk',
-  'empathie',
-  'entschlossenheit',
-  'fingerfertigkeit',
-  'geschichtenUndMythen',
-  'handwerk',
-  'heilkunde',
-  'heimlichkeit',
-  'jagdkunst',
-  'laenderkunde',
-  'naturkunde',
-  'redegewandheit',
-  'schloesserUndFallen',
-  'schwimmen',
-  'seefahrt',
-  'strassenkunde',
-  'tierfuehrung',
-  'ueberleben',
+export const generalSkills = [
+  'acrobatics',
+  'alchemy',
+  'leadership',
+  'arcaneLore',
+  'athletics',
+  'performance',
+  'diplomacy',
+  'fineCrafting',
+  'empathy',
+  'determination',
+  'dexterity',
+  'storiesAndMyths',
+  'crafting',
+  'medicine',
+  'stealth',
+  'hunting',
+  'geography',
+  'natureStudy',
+  'eloquence',
+  'locksAndTraps',
+  'swimming',
+  'seafaring',
+  'streetKnowledge',
+  'animalGuidance',
+  'survival',
   'perception',
-  'zaehigkeit',
+  'toughness',
 ] as const
 
-export const kampfFertigkeiten = [
-  'handgemenge',
-  'hiebwaffen',
-  'kettenwaffen',
-  'klingenwaffen',
-  'stangenwaffen',
-  'schusswaffen',
-  'wurfwaffen',
+export const combatSkills = [
+  'melee',
+  'cuttingWeapons',
+  'chainWeapons',
+  'bladedWeapons',
+  'polearms',
+  'firearms',
+  'thrownWeapons',
 ] as const
 
-export const fertigkeiten = [
-  ...allgemeineFertigkeiten,
+export const skills = [
+  ...generalSkills,
   ...magicschools,
-  ...kampfFertigkeiten,
+  ...combatSkills,
 ] as const
 
-export const fertigkeitenGruppen = {
-  allgemeineFertigkeiten,
+export const skillGroups = {
+  generalSkills,
   magicschools: magicschools,
-  kampfFertigkeiten,
+  combatSkills,
 }
 
-const fertigkeitenDefinitionBasis = abgeleiteteWerteDefinition
+const skillsDefinitionBase = abgeleiteteWerteDefinition
   .addAttributes({
-    ...mapToAttributeDefinitions(fertigkeiten, { type: 'number' }),
+    ...mapToAttributeDefinitions(skills, { type: 'number' }),
   })
   .addAttributeGroups({
-    fertigkeiten,
-    allgemeineFertigkeiten,
-    magicschools: magicschools,
-    kampfFertigkeiten,
+    skills,
+    generalSkills,
+    magicschools,
+    combatSkills,
   })
 
-type AttributeMitFertigkeiten =
-  | typeof allgemeineFertigkeiten[number]
+type SkillsWithAttributes =
+  | typeof generalSkills[number]
   | typeof magicschools[number]
 
-export const fertigkeitenAttribute: Record<
-  AttributeMitFertigkeiten,
+export const skillsAttributes: Record<
+  SkillsWithAttributes,
   [typeof attributes[number], typeof attributes[number]]
 > = {
-  // Allgemeine Fertigkeiten
-  akrobatik: ['agility', 'strength'],
-  alchemie: ['mysticism', 'intellect'],
-  anfuehren: ['charisma', 'willpower'],
-  arkaneKunde: ['mysticism', 'willpower'],
-  athletik: ['agility', 'strength'],
-  darbietung: ['charisma', 'willpower'],
-  diplomatie: ['charisma', 'willpower'],
-  edelhandwerk: ['intuition', 'intellect'],
-  empathie: ['intuition', 'intellect'],
-  entschlossenheit: ['charisma', 'willpower'],
-  fingerfertigkeit: ['charisma', 'agility'],
-  geschichtenUndMythen: ['mysticism', 'intellect'],
-  handwerk: ['constitution', 'intellect'],
-  heilkunde: ['intuition', 'intellect'],
-  heimlichkeit: ['agility', 'intuition'],
-  jagdkunst: ['constitution', 'intellect'],
-  laenderkunde: ['intuition', 'intellect'],
-  naturkunde: ['intuition', 'intellect'],
-  redegewandheit: ['charisma', 'willpower'],
-  schloesserUndFallen: ['agility', 'intuition'],
-  schwimmen: ['constitution', 'strength'],
-  seefahrt: ['agility', 'constitution'],
-  strassenkunde: ['charisma', 'intuition'],
-  tierfuehrung: ['agility', 'charisma'],
-  ueberleben: ['intuition', 'constitution'],
+  // General skills
+  acrobatics: ['agility', 'strength'],
+  alchemy: ['mysticism', 'intellect'],
+  leadership: ['charisma', 'willpower'],
+  arcaneLore: ['mysticism', 'willpower'],
+  athletics: ['agility', 'strength'],
+  performance: ['charisma', 'willpower'],
+  diplomacy: ['charisma', 'willpower'],
+  fineCrafting: ['intuition', 'intellect'],
+  empathy: ['intuition', 'intellect'],
+  determination: ['charisma', 'willpower'],
+  dexterity: ['charisma', 'agility'],
+  storiesAndMyths: ['mysticism', 'intellect'],
+  crafting: ['constitution', 'intellect'],
+  medicine: ['intuition', 'intellect'],
+  stealth: ['agility', 'intuition'],
+  hunting: ['constitution', 'intellect'],
+  geography: ['intuition', 'intellect'],
+  natureStudy: ['intuition', 'intellect'],
+  eloquence: ['charisma', 'willpower'],
+  locksAndTraps: ['agility', 'intuition'],
+  swimming: ['constitution', 'strength'],
+  seafaring: ['agility', 'constitution'],
+  streetKnowledge: ['charisma', 'intuition'],
+  animalGuidance: ['agility', 'charisma'],
+  survival: ['intuition', 'constitution'],
   perception: ['intuition', 'willpower'],
-  zaehigkeit: ['constitution', 'willpower'],
+  toughness: ['constitution', 'willpower'],
 
-  // magicschools
+  // Magicschools
   ban: ['mysticism', 'willpower'],
   control: ['mysticism', 'willpower'],
   movement: ['mysticism', 'agility'],
@@ -127,23 +127,21 @@ export const fertigkeitenAttribute: Record<
   wind: ['mysticism', 'intellect'],
 }
 
-export let fertigkeitenDefinition = fertigkeitenDefinitionBasis
+export let skillsDefinition = skillsDefinitionBase
 
-Object.entries(fertigkeitenAttribute).forEach(
-  ([skill, fertigkeitAttribute]) => {
-    const [attribut1, attribut2] = fertigkeitAttribute
-    fertigkeitenDefinition = fertigkeitenDefinition.addAttributeCalculations({
-      // TODO: why do we need to define characterstate when using a dynamic prop key?
-      [skill]: ({
-        attributes,
-        rawAttributes,
-      }: CharacterState<typeof fertigkeitenDefinitionBasis['attributes']>) => {
-        return (
-          rawAttributes[skill as AttributeMitFertigkeiten] +
-          attributes[attribut1] +
-          attributes[attribut2]
-        )
-      },
-    })
-  }
-)
+Object.entries(skillsAttributes).forEach(([skill, skillAttributes]) => {
+  const [attribute1, attribute2] = skillAttributes
+  skillsDefinition = skillsDefinition.addAttributeCalculations({
+    // TODO: why do we need to define characterstate when using a dynamic prop key?
+    [skill]: ({
+      attributes,
+      rawAttributes,
+    }: CharacterState<typeof skillsDefinitionBase['attributes']>) => {
+      return (
+        rawAttributes[skill as SkillsWithAttributes] +
+        attributes[attribute1] +
+        attributes[attribute2]
+      )
+    },
+  })
+})
