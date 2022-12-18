@@ -1,45 +1,45 @@
 import { describe, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { erschaffungDefinition } from './creation'
+import { creationDefinition } from './creation'
 
-describe('Erschaffung', () => {
-  const { setupTest } = createTestSetup(erschaffungDefinition)
+describe('Creation', () => {
+  const { setupTest } = createTestSetup(creationDefinition)
 
   it('can proceed', () => {
     const { expectState, character } = setupTest()
-    character.execute('erschaffungWeiter', {})
+    character.execute('nextCreationStep', {})
     expectState({
-      erschaffungsZustand: 2,
+      creationStep: 2,
     })
-    character.execute('erschaffungWeiter', {})
+    character.execute('nextCreationStep', {})
     expectState({
-      erschaffungsZustand: 3,
+      creationStep: 3,
     })
-    character.execute('erschaffungWeiter', {})
+    character.execute('nextCreationStep', {})
     expectState({
-      erschaffungsZustand: 4,
+      creationStep: 4,
     })
   })
 
   it('can not exceed max', () => {
     const { expectState, character } = setupTest({
-      erschaffungsZustand: 4,
+      creationStep: 4,
     })
-    character.execute('erschaffungWeiter', {})
+    character.execute('nextCreationStep', {})
     expectState({
-      erschaffungsZustand: 4,
+      creationStep: 4,
     })
   })
 
   it('adds points on step 3', () => {
     const { expectState, character } = setupTest({
-      erschaffungsZustand: 2,
+      creationStep: 2,
     })
-    character.execute('erschaffungWeiter', {})
+    character.execute('nextCreationStep', {})
     expectState({
-      attributPunkte: 11,
+      attributePoints: 11,
       freeSkillPoints: 55,
-      erfahrungspunkte: 15,
+      xp: 15,
       masteryPoints: 3,
     })
   })

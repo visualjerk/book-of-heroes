@@ -1,5 +1,5 @@
 import { mapToAttributeDefinitions } from '@boh/character'
-import { basisDefinition } from '../basics'
+import { basicsDefinition } from '../basics'
 
 export const attributes = [
   'charisma',
@@ -12,7 +12,7 @@ export const attributes = [
   'willpower',
 ] as const
 
-export const attributesDefinition = basisDefinition.enhance(
+export const attributesDefinition = basicsDefinition.enhance(
   {
     ...mapToAttributeDefinitions(attributes, { type: 'number' }),
   },
@@ -21,35 +21,35 @@ export const attributesDefinition = basisDefinition.enhance(
   },
   {
     charisma: ({ attributes, rawAttributes }) => {
-      const mod = attributes.rasse === 'alb' ? 1 : 0
+      const mod = attributes.race === 'alb' ? 1 : 0
       return rawAttributes.charisma + mod
     },
     agility: ({ attributes, rawAttributes }) => {
-      let mod = attributes.rasse === 'alb' ? 1 : 0
-      mod += attributes.rasse === 'zwerg' ? -1 : 0
+      let mod = attributes.race === 'alb' ? 1 : 0
+      mod += attributes.race === 'dwarf' ? -1 : 0
       return rawAttributes.agility + mod
     },
     constitution: ({ attributes, rawAttributes }) => {
-      let mod = attributes.rasse === 'alb' ? -1 : 0
-      mod += attributes.rasse === 'zwerg' ? 1 : 0
+      let mod = attributes.race === 'alb' ? -1 : 0
+      mod += attributes.race === 'dwarf' ? 1 : 0
       return rawAttributes.constitution + mod
     },
     mysticism: ({ attributes, rawAttributes }) => {
-      const mod = attributes.rasse === 'gnom' ? 1 : 0
+      const mod = attributes.race === 'gnome' ? 1 : 0
       return rawAttributes.mysticism + mod
     },
     strength: ({ attributes, rawAttributes }) => {
-      let mod = attributes.rasse === 'gnom' ? -1 : 0
-      mod += attributes.rasse === 'varg' ? 2 : 0
+      let mod = attributes.race === 'gnome' ? -1 : 0
+      mod += attributes.race === 'varg' ? 2 : 0
       return rawAttributes.strength + mod
     },
     intellect: ({ attributes, rawAttributes }) => {
-      const mod = attributes.rasse === 'gnom' ? 1 : 0
+      const mod = attributes.race === 'gnome' ? 1 : 0
       return rawAttributes.intellect + mod
     },
     willpower: ({ attributes, rawAttributes }) => {
-      let mod = attributes.rasse === 'zwerg' ? 1 : 0
-      mod += attributes.rasse === 'varg' ? -1 : 0
+      let mod = attributes.race === 'dwarf' ? 1 : 0
+      mod += attributes.race === 'varg' ? -1 : 0
       return rawAttributes.willpower + mod
     },
   },

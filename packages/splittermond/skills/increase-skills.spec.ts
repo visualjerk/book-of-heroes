@@ -43,12 +43,12 @@ describe('Increase Skills', () => {
 
   it('can increase with xp', () => {
     const { expectState, increase } = setupTest({
-      erfahrungspunkte: 10,
+      xp: 10,
     })
     increase()
     expectState({
       ban: 1,
-      erfahrungspunkteEingesetzt: 3,
+      xpUsed: 3,
     })
   })
 
@@ -62,13 +62,13 @@ describe('Increase Skills', () => {
   ])('for used xp of %i max points are %i', (usedXp, points) => {
     const { expectState, increase } = setupTest({
       ban: points,
-      erfahrungspunkte: 1000,
-      erfahrungspunkteEingesetzt: usedXp,
+      xp: 1000,
+      xpUsed: usedXp,
     })
     increase()
     expectState({
       ban: points,
-      erfahrungspunkteEingesetzt: usedXp,
+      xpUsed: usedXp,
     })
   })
 
@@ -83,12 +83,12 @@ describe('Increase Skills', () => {
   ])('for skill points of %i cost is %i xp', (points, cost) => {
     const { expectState, increase } = setupTest({
       ban: points,
-      erfahrungspunkte: 1000,
-      erfahrungspunkteEingesetzt: 600,
+      xp: 1000,
+      xpUsed: 600,
     })
     increase()
     expectState({
-      erfahrungspunkteEingesetzt: 600 + cost,
+      xpUsed: 600 + cost,
       ban: points + 1,
     })
   })
@@ -102,8 +102,8 @@ describe('Increase Skills', () => {
     'increasing to %i adds mastery points %s',
     (points, masteryPoints) => {
       const { expectState, increase } = setupTest({
-        erfahrungspunkte: 1000,
-        erfahrungspunkteEingesetzt: 600,
+        xp: 1000,
+        xpUsed: 600,
       })
       for (let i = 0; i < points; i++) {
         increase()
@@ -125,8 +125,8 @@ describe('Increase Skills', () => {
     'increasing to %i adds spell points %s',
     (points, spellPoints) => {
       const { expectState, increase } = setupTest({
-        erfahrungspunkte: 1000,
-        erfahrungspunkteEingesetzt: 600,
+        xp: 1000,
+        xpUsed: 600,
       })
       for (let i = 0; i < points; i++) {
         increase()

@@ -50,7 +50,7 @@ export const increaseSkillsDefinition = skillsDefinition
             magicLevel = magicLevels[magicTreshold]
           }
 
-          const maximumValue = 6 + 3 * (attributes.heldengrad - 1)
+          const maximumValue = 6 + 3 * (attributes.heroLevel - 1)
           if (rawAttributes[skill] >= maximumValue) {
             reject(`Maximal ${maximumValue} Punkte pro Fertigkeit`)
           }
@@ -83,12 +83,11 @@ export const increaseSkillsDefinition = skillsDefinition
           // Increase with XP
           const xpCost =
             3 + 2 * Math.max(0, Math.floor((rawAttributes[skill] - 3) / 3))
-          const freeXp =
-            attributes.erfahrungspunkte - attributes.erfahrungspunkteEingesetzt
+          const freeXp = attributes.xp - attributes.xpUsed
           if (freeXp < xpCost) {
             reject('Nicht genug Erfahrungspunkte')
           }
-          mutate('erfahrungspunkteEingesetzt', {
+          mutate('xpUsed', {
             type: 'add',
             amount: xpCost,
           })

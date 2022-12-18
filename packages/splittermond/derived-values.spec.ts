@@ -1,40 +1,40 @@
 import { describe, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { abgeleiteteWerteDefinition } from './derived-values'
+import { derivedValuesDefinition } from './derived-values'
 
-describe('AbgeleiteteWerte', () => {
-  const { setupTest } = createTestSetup(abgeleiteteWerteDefinition)
+describe('Derived Values', () => {
+  const { setupTest } = createTestSetup(derivedValuesDefinition)
 
   it.each([
     ['alb', 5],
-    ['gnom', 3],
-    ['mensch', 5],
+    ['gnome', 3],
+    ['human', 5],
     ['varg', 6],
-    ['zwerg', 4],
+    ['dwarf', 4],
   ] as const)('for race "%s" size class is %i', (race, sizeClass) => {
     const { expectState } = setupTest({
-      rasse: race,
+      race: race,
     })
     expectState({
-      groessenklasse: sizeClass,
+      sizeClass: sizeClass,
     })
   })
 
   it.each([
     ['alb', 0, 6],
     ['alb', 2, 8],
-    ['gnom', 0, 3],
-    ['gnom', 4, 7],
-    ['zwerg', 4, 7],
+    ['gnome', 0, 3],
+    ['gnome', 4, 7],
+    ['dwarf', 4, 7],
   ] as const)(
     'for race "%s" and agility %i speed is %i',
     (race, agility, speed) => {
       const { expectState } = setupTest({
-        rasse: race,
+        race: race,
         agility: agility,
       })
       expectState({
-        geschwindigkeit: speed,
+        speed: speed,
       })
     }
   )
@@ -51,10 +51,10 @@ describe('AbgeleiteteWerte', () => {
   it('health is calculated correctly', () => {
     const { expectState } = setupTest({
       constitution: 4,
-      rasse: 'mensch',
+      race: 'human',
     })
     expectState({
-      lebenspunkte: 9,
+      healthPoints: 9,
     })
   })
 
@@ -64,19 +64,19 @@ describe('AbgeleiteteWerte', () => {
       willpower: 2,
     })
     expectState({
-      fokus: 12,
+      focus: 12,
     })
   })
 
   it.each([
-    ['verteidigung', 'agility', 'strength'],
-    ['geistigerWiderstand', 'intellect', 'willpower'],
-    ['koerperlicherWiderstand', 'constitution', 'willpower'],
+    ['defense', 'agility', 'strength'],
+    ['mentalResistance', 'intellect', 'willpower'],
+    ['physicalResistance', 'constitution', 'willpower'],
   ] as const)(
     '"%s" is calculated from "%s" and "%s"',
     (resistance, attribute1, attribute2) => {
       const { expectState } = setupTest({
-        rasse: 'mensch',
+        race: 'human',
         [attribute1]: 1,
         [attribute2]: 2,
       })
@@ -86,24 +86,23 @@ describe('AbgeleiteteWerte', () => {
     }
   )
 
-  describe.each([
-    'verteidigung',
-    'geistigerWiderstand',
-    'koerperlicherWiderstand',
-  ] as const)('for "%s"', (resistance) => {
-    it.each([
-      [0, 0],
-      [100, 2],
-      [300, 4],
-      [600, 6],
-    ])('for used xp %i adds %i points', (usedXp, addedPoints) => {
-      const { expectState } = setupTest({
-        rasse: 'mensch',
-        erfahrungspunkteEingesetzt: usedXp,
+  describe.each(['defense', 'mentalResistance', 'physicalResistance'] as const)(
+    'for "%s"',
+    (resistance) => {
+      it.each([
+        [0, 0],
+        [100, 2],
+        [300, 4],
+        [600, 6],
+      ])('for used xp %i adds %i points', (usedXp, addedPoints) => {
+        const { expectState } = setupTest({
+          race: 'human',
+          xpUsed: usedXp,
+        })
+        expectState({
+          [resistance]: 12 + addedPoints,
+        })
       })
-      expectState({
-        [resistance]: 12 + addedPoints,
-      })
-    })
-  })
+    }
+  )
 })

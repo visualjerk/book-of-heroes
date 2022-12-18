@@ -1,76 +1,69 @@
 import { defineCharacter } from '@boh/character'
 
-export const basisDefinition = defineCharacter(
+export const basicsDefinition = defineCharacter(
   {
     name: { type: 'text' },
-    rasse: {
+    race: {
       type: 'single-select',
-      options: ['alb', 'gnom', 'mensch', 'varg', 'zwerg'] as const,
+      options: ['alb', 'gnome', 'human', 'varg', 'dwarf'] as const,
     },
-    erfahrungspunkte: { type: 'number' },
-    erfahrungspunkteEingesetzt: { type: 'number' },
-    heldengrad: { type: 'single-select', options: [1, 2, 3, 4] as const },
-    splitterpunkte: { type: 'number' },
+    xp: { type: 'number' },
+    xpUsed: { type: 'number' },
+    heroLevel: { type: 'single-select', options: [1, 2, 3, 4] as const },
+    splinterPoints: { type: 'number' },
   },
   {
-    basis: [
-      'name',
-      'rasse',
-      'erfahrungspunkte',
-      'erfahrungspunkteEingesetzt',
-      'heldengrad',
-      'splitterpunkte',
-    ],
+    basics: ['name', 'race', 'xp', 'xpUsed', 'heroLevel', 'splinterPoints'],
   },
   {
-    heldengrad: ({ attributes }) => {
-      if (attributes.erfahrungspunkteEingesetzt < 100) {
+    heroLevel: ({ attributes }) => {
+      if (attributes.xpUsed < 100) {
         return 1
       }
 
-      if (attributes.erfahrungspunkteEingesetzt < 300) {
+      if (attributes.xpUsed < 300) {
         return 2
       }
 
-      if (attributes.erfahrungspunkteEingesetzt < 600) {
+      if (attributes.xpUsed < 600) {
         return 3
       }
 
       return 4
     },
-    splitterpunkte: ({ attributes }) => {
-      return 2 + attributes.heldengrad
+    splinterPoints: ({ attributes }) => {
+      return 2 + attributes.heroLevel
     },
   },
   {
-    erfahrungspunkteHinzufuegen: {
-      menge: 'number',
+    addXp: {
+      amount: 'number',
     },
-    nameSetzen: {
+    setName: {
       name: 'name.value',
     },
-    rasseSetzen: {
-      rasse: 'rasse.value',
+    setRace: {
+      race: 'race.value',
     },
   },
   {
-    erfahrungspunkteHinzufuegen: {
-      apply({ mutate }, { menge }) {
-        mutate('erfahrungspunkte', {
+    addXp: {
+      apply({ mutate }, { amount }) {
+        mutate('xp', {
           type: 'add',
-          amount: menge,
+          amount,
         })
       },
     },
-    nameSetzen: {
+    setName: {
       apply({ mutate }, { name }) {
         mutate('name', { value: name })
       },
     },
-    rasseSetzen: {
-      apply({ mutate }, { rasse }) {
-        mutate('rasse', {
-          option: rasse,
+    setRace: {
+      apply({ mutate }, { race }) {
+        mutate('race', {
+          option: race,
         })
       },
     },

@@ -81,14 +81,13 @@ export const learnSpellsDefinition = increaseSkillsDefinition
 
           // Learn by experience points
           const xpCost = Math.max(1, magicLevel * 3)
-          const freeXp =
-            attributes.erfahrungspunkte - attributes.erfahrungspunkteEingesetzt
+          const freeXp = attributes.xp - attributes.xpUsed
           if (freeXp < xpCost) {
             reject('Nicht genug Erfahrungspunkte')
             return
           }
 
-          mutate('erfahrungspunkteEingesetzt', {
+          mutate('xpUsed', {
             type: 'add',
             amount: xpCost,
           })

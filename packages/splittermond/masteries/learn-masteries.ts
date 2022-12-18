@@ -66,9 +66,7 @@ export const learnMasteriesDefinition = masteriesDefinition
             return
           }
 
-          const freeXp =
-            rawAttributes.erfahrungspunkte -
-            rawAttributes.erfahrungspunkteEingesetzt
+          const freeXp = rawAttributes.xp - rawAttributes.xpUsed
 
           if (freeXp < 15) {
             reject('Zu wenig Erfahrungspunkte')
@@ -79,7 +77,7 @@ export const learnMasteriesDefinition = masteriesDefinition
             type: 'add',
             option: name,
           })
-          mutate('erfahrungspunkteEingesetzt', {
+          mutate('xpUsed', {
             type: 'add',
             amount: 15,
           })

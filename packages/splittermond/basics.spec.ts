@@ -1,13 +1,13 @@
 import { describe, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
-import { basisDefinition } from './basics'
+import { basicsDefinition } from './basics'
 
-describe('Basis', () => {
-  const { setupTest } = createTestSetup(basisDefinition)
+describe('Basics', () => {
+  const { setupTest } = createTestSetup(basicsDefinition)
 
   it('can set name', () => {
     const { expectState, character } = setupTest()
-    character.execute('nameSetzen', {
+    character.execute('setName', {
       name: 'Barbarus',
     })
     expectState({
@@ -17,21 +17,21 @@ describe('Basis', () => {
 
   it('can set race', () => {
     const { expectState, character } = setupTest()
-    character.execute('rasseSetzen', {
-      rasse: 'varg',
+    character.execute('setRace', {
+      race: 'varg',
     })
     expectState({
-      rasse: 'varg',
+      race: 'varg',
     })
   })
 
   it('can add xp', () => {
     const { expectState, character } = setupTest()
-    character.execute('erfahrungspunkteHinzufuegen', {
-      menge: 10,
+    character.execute('addXp', {
+      amount: 10,
     })
     expectState({
-      erfahrungspunkte: 10,
+      xp: 10,
     })
   })
 
@@ -45,10 +45,10 @@ describe('Basis', () => {
     [600, 4],
   ] as const)('for %i used xp hero level is %i', (xp, level) => {
     const { expectState } = setupTest({
-      erfahrungspunkteEingesetzt: xp,
+      xpUsed: xp,
     })
     expectState({
-      heldengrad: level,
+      heroLevel: level,
     })
   })
 
@@ -59,10 +59,10 @@ describe('Basis', () => {
     [600, 6],
   ])('for %i used xp shard points are %i', (xp, points) => {
     const { expectState } = setupTest({
-      erfahrungspunkteEingesetzt: xp,
+      xpUsed: xp,
     })
     expectState({
-      splitterpunkte: points,
+      splinterPoints: points,
     })
   })
 })

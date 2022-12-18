@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { createTestSetup } from '@boh/character'
 import { attributes } from './attributes'
-import { attributeSteigernDefinition } from './increase-attributes'
+import { increaseAttributesDefinition } from './increase-attributes'
 
 describe('AttributeSteigern', () => {
   function setupTest(initialPoints = 10) {
-    const { setupTest } = createTestSetup(attributeSteigernDefinition)
+    const { setupTest } = createTestSetup(increaseAttributesDefinition)
     const { character, getRawValue } = setupTest({
-      attributPunkte: initialPoints,
+      attributePoints: initialPoints,
     })
 
     const execute = (attribute: typeof attributes[number] = 'charisma') =>
@@ -38,7 +38,7 @@ describe('AttributeSteigern', () => {
   it('removes points', () => {
     const { getValue, execute } = setupTest(1)
     execute()
-    expect(getValue('attributPunkte')).toBe(0)
+    expect(getValue('attributePoints')).toBe(0)
   })
 
   it('fails when reached maximum', () => {
@@ -75,7 +75,7 @@ describe('AttributeSteigern', () => {
 
   it('maximum for second attribute is 4 for humans', () => {
     const { character, getValue, execute } = setupTest()
-    character.rawAttributes.rasse = 'mensch'
+    character.rawAttributes.race = 'human'
     execute()
     execute()
     execute()
@@ -92,7 +92,7 @@ describe('AttributeSteigern', () => {
 
   it('maximum for strength is 3 for vargs', () => {
     const { character, getValue, execute } = setupTest()
-    character.rawAttributes.rasse = 'varg'
+    character.rawAttributes.race = 'varg'
     execute('strength')
     execute('strength')
     execute('strength')

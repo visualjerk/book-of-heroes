@@ -1,5 +1,5 @@
 import { CharacterState, mapToAttributeDefinitions } from '@boh/character'
-import { abgeleiteteWerteDefinition } from '../derived-values'
+import { derivedValuesDefinition } from '../derived-values'
 import { attributes } from '../attributes/attributes'
 import { magicschools } from '../magic/magicschools'
 
@@ -57,7 +57,7 @@ export const skillGroups = {
   combatSkills,
 }
 
-const skillsDefinitionBase = abgeleiteteWerteDefinition
+const skillsDefinitionBase = derivedValuesDefinition
   .addAttributes({
     ...mapToAttributeDefinitions(skills, { type: 'number' }),
   })

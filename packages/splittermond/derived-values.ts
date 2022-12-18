@@ -1,89 +1,85 @@
-import { attributeSteigernDefinition } from './attributes/increase-attributes'
+import { increaseAttributesDefinition } from './attributes/increase-attributes'
 
-export const abgeleiteteWerteDefinition = attributeSteigernDefinition.enhance(
+export const derivedValuesDefinition = increaseAttributesDefinition.enhance(
   {
-    groessenklasse: {
+    sizeClass: {
       type: 'single-select',
       options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const,
     },
-    geschwindigkeit: { type: 'number' },
+    speed: { type: 'number' },
     initiative: { type: 'number' },
-    lebenspunkte: { type: 'number' },
-    fokus: { type: 'number' },
+    healthPoints: { type: 'number' },
+    focus: { type: 'number' },
 
-    // Widerstandswerte
-    verteidigung: { type: 'number' },
-    geistigerWiderstand: { type: 'number' },
-    koerperlicherWiderstand: { type: 'number' },
+    // Resistances
+    defense: { type: 'number' },
+    mentalResistance: { type: 'number' },
+    physicalResistance: { type: 'number' },
   },
   {
-    abgeleiteteWerte: [
-      'groessenklasse',
-      'geschwindigkeit',
+    derivedValues: [
+      'sizeClass',
+      'speed',
       'initiative',
-      'lebenspunkte',
-      'fokus',
-      'verteidigung',
-      'geistigerWiderstand',
-      'koerperlicherWiderstand',
+      'healthPoints',
+      'focus',
+      'defense',
+      'mentalResistance',
+      'physicalResistance',
     ],
-    widerstandsWerte: [
-      'verteidigung',
-      'geistigerWiderstand',
-      'koerperlicherWiderstand',
-    ],
+    resistances: ['defense', 'mentalResistance', 'physicalResistance'],
   },
   {
-    groessenklasse: ({ attributes }) => {
-      switch (attributes.rasse) {
+    sizeClass: ({ attributes }) => {
+      switch (attributes.race) {
         case 'alb':
           return 5
-        case 'gnom':
+        case 'gnome':
           return 3
-        case 'mensch':
+        case 'human':
           return 5
         case 'varg':
           return 6
-        case 'zwerg':
+        case 'dwarf':
           return 4
       }
     },
-    geschwindigkeit: ({ attributes }) => {
-      return attributes.agility + attributes.groessenklasse
+    speed: ({ attributes }) => {
+      return attributes.agility + attributes.sizeClass
     },
     initiative: ({ attributes }) => {
       return 10 - attributes.intuition
     },
-    lebenspunkte: ({ attributes }) => {
-      return attributes.constitution + attributes.groessenklasse
+    healthPoints: ({ attributes }) => {
+      return attributes.constitution + attributes.sizeClass
     },
-    fokus: ({ attributes }) => {
+    focus: ({ attributes }) => {
       return (attributes.mysticism + attributes.willpower) * 2
     },
 
-    // Widerstandswerte
-    verteidigung: ({ attributes }) => {
+    // Resistances
+    defense: ({ attributes }) => {
       return (
         12 +
         attributes.agility +
         attributes.strength +
-        (attributes.heldengrad - 1) * 2
+        (attributes.heroLevel - 1) * 2
       )
     },
-    geistigerWiderstand: ({ attributes }) => {
+    mentalResistance: ({ attributes }) => {
       return (
         12 +
         attributes.intellect +
         attributes.willpower +
-        (attributes.heldengrad - 1) * 2
+        (attributes.heroLevel - 1) * 2
       )
     },
-    koerperlicherWiderstand: ({ attributes }) => {
+    physicalResistance: ({ attributes }) => {
       return (
         12 +
         attributes.constitution +
         attributes.willpower +
-        (attributes.heldengrad - 1) * 2
+        (attributes.heroLevel - 1) * 2
       )
     },
   },

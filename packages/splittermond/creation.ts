@@ -1,45 +1,49 @@
 import { learnMasteriesDefinition } from './masteries/learn-masteries'
 
-export const erschaffungDefinition = learnMasteriesDefinition
+const creationSteps = [1, 2, 3, 4] as const
+
+type CreationStep = typeof creationSteps[number]
+
+export const creationDefinition = learnMasteriesDefinition
   .addAttributes({
-    erschaffungsZustand: {
+    creationStep: {
       type: 'single-select',
-      options: [1, 2, 3, 4] as const,
+      options: creationSteps,
     },
   })
   .addEvents(
     {
-      erschaffungWeiter: {},
+      nextCreationStep: {},
     },
     {
-      erschaffungWeiter: {
+      nextCreationStep: {
         apply({ mutate, reject }, _, { rawAttributes }, { groups }) {
-          const naechsterZustand = rawAttributes.erschaffungsZustand + 1
-          if (naechsterZustand > 4) {
+          const nextStep = rawAttributes.creationStep + 1
+          if (nextStep > 4) {
             reject('Letzte Erschaffungsstufe erreicht.')
             return
           }
 
-          if (naechsterZustand === 3) {
-            // 18 Attributpunkte, wobei jedes mindestens einen haben muss
+          if (nextStep === 3) {
+            // 18 attribute points, at least one point for each attribute
             groups.attributes.forEach((attributKey) => {
               mutate(attributKey, {
                 type: 'add',
                 amount: 1,
               })
             })
-            // Alle Rassen bekommen einen zusätzlichen Attributpunkt
-            // Menschen bekommen zwei zusätzliche Attributpunkte
-            const attributPunkte = rawAttributes.rasse === 'mensch' ? 12 : 11
-            mutate('attributPunkte', {
+            // Each race gets one additional point
+            // Humans get two additional points
+            const attributePoints = rawAttributes.race === 'human' ? 12 : 11
+            mutate('attributePoints', {
               type: 'add',
-              amount: attributPunkte,
+              amount: attributePoints,
             })
             mutate('freeSkillPoints', {
               type: 'add',
               amount: 55,
             })
-            mutate('erfahrungspunkte', {
+            mutate('xp', {
               type: 'add',
               amount: 15,
             })
@@ -49,8 +53,8 @@ export const erschaffungDefinition = learnMasteriesDefinition
             })
           }
 
-          mutate('erschaffungsZustand', {
-            option: naechsterZustand as any,
+          mutate('creationStep', {
+            option: nextStep as CreationStep,
           })
         },
       },

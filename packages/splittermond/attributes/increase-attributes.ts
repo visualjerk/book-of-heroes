@@ -1,8 +1,8 @@
 import { attributesDefinition } from './attributes'
 
-export const attributeSteigernDefinition = attributesDefinition
+export const increaseAttributesDefinition = attributesDefinition
   .addAttributes({
-    attributPunkte: { type: 'number' },
+    attributePoints: { type: 'number' },
   })
   .addEvents(
     {
@@ -18,7 +18,7 @@ export const attributeSteigernDefinition = attributesDefinition
           { rawAttributes },
           { groups }
         ) {
-          if (rawAttributes.attributPunkte < 1) {
+          if (rawAttributes.attributePoints < 1) {
             reject('Alle Punkte sind aufgebraucht')
           }
 
@@ -26,18 +26,18 @@ export const attributeSteigernDefinition = attributesDefinition
           const attributeMitWert4 = groups.attributes.filter(
             (key) => rawAttributes[key] >= 4
           ).length
-          const erlaubtMitWert4 = rawAttributes.rasse === 'mensch' ? 2 : 1
+          const erlaubtMitWert4 = rawAttributes.race === 'human' ? 2 : 1
           let maxWert = attributeMitWert4 < erlaubtMitWert4 ? 4 : 3
 
           // Varge dürfen Stärke nicht auf 4 setzen (haben bereits +2 auf Stärke)
-          if (attribute === 'strength' && rawAttributes.rasse === 'varg') {
+          if (attribute === 'strength' && rawAttributes.race === 'varg') {
             maxWert = 3
           }
 
           if (rawAttributes[attribute] >= maxWert) {
             reject('Maximalpunkte erreicht')
           }
-          mutate('attributPunkte', {
+          mutate('attributePoints', {
             type: 'subtract',
             amount: 1,
           })

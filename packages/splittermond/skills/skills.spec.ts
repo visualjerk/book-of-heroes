@@ -13,7 +13,7 @@ describe('Skills', () => {
   describe.each([...generalSkills, ...magicschools])('skill "%s"', (skill) => {
     it('adds its own points', () => {
       const { expectState } = setupTest({
-        rasse: 'mensch',
+        race: 'human',
         [skill]: 2,
       })
       expectState({
@@ -25,7 +25,7 @@ describe('Skills', () => {
 
     it.each(attribute)('is calculated by attribute "%s"', (attribut) => {
       const { expectState } = setupTest({
-        rasse: 'mensch',
+        race: 'human',
         [skill]: 2,
         [attribut]: 3,
       })
