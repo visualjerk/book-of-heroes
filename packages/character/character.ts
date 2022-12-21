@@ -211,7 +211,6 @@ export class Character<
     }
   }
 
-  // TODO: make private (check SplittermondView.vue and useEventButton for Error)
   resetState() {
     const definition = this.definition
     const rawAttributes = Object.entries(definition.attributes).reduce(
